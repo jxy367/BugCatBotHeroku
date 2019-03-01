@@ -3,6 +3,7 @@ import io
 import os
 import urllib
 from urllib import request
+import aiohttp
 
 import discord
 import requests
@@ -255,16 +256,18 @@ async def ep(ctx, value):
 
     if len(comic_images) > 0:
         print(comic_images)
-        await await_ctx(ctx, content="Episode found")
-        i = 1
-        for image_url in comic_images:
-            s = requests.get(image_url, headers={'referer': "http://www.webtoons.com/"})
-            image = io.BytesIO(s.content)
-            file = discord.File(image, str(i))
-            discord_files.append(file)
-            i += 1
 
-        await ctx.send(files=discord_files)
+        i = 1
+        async with aiohttp.ClientSession(headers={'referer': "https://www.webtoons.com/"}) as session:
+            for image_url in comic_images:
+                async with session.get(image_url) as resp:
+                    data = io.BytesIO(await resp.read())
+                    discord_files.append(discord.File(data, str(i)))
+                    i += 1
+
+        if len(discord_files) > 0:
+            await await_ctx(ctx, content="Episode found")
+            await ctx.send(files=discord_files)
 
 
 @client.command()
