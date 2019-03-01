@@ -252,8 +252,6 @@ async def ep(ctx, value):
         ep_num = int(value)
         comic_images = get_bug_cat_comic(ep_num)
 
-    #discord_files = []
-
     if len(comic_images) > 0:
         print(comic_images)
 
@@ -264,8 +262,7 @@ async def ep(ctx, value):
                 async with session.get(image_url) as resp:
                     print(resp.status)
                     data = io.BytesIO(await resp.read())
-                    await ctx.send(file=discord.File(data, str(i)))
-                    #discord_files.append(discord.File(data, str(i)))
+                    await ctx.send(file=discord.File(data, str(i)+".jpg"))
                     i += 1
 
 
