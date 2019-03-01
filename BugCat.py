@@ -251,12 +251,12 @@ async def ep(ctx, value):
         comic_images = get_bug_cat_comic(ep_num)
 
     if len(comic_images) > 0:
+        print(comic_images)
         await await_ctx(ctx, content="Episode found")
         for image_url in comic_images:
             e = discord.Embed()
             e.set_image(url=image_url)
             await ctx.send(embed=e)
-
 
 
 @client.command()
