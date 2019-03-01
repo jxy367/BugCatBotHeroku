@@ -1,21 +1,7 @@
 import asyncio
-import base64
-# from datetime import *
-import datetime as dt
-import io
-import json
 import os
-import random
-import re
-import time
 import urllib
-from itertools import permutations
-from multiprocessing.dummy import Pool
-# from time import sleep
-from urllib import parse
 from urllib import request
-import requests
-from io import BytesIO
 
 import discord
 import requests
