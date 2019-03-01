@@ -1,4 +1,5 @@
 import asyncio
+import io
 import os
 import urllib
 from urllib import request
@@ -250,13 +251,20 @@ async def ep(ctx, value):
         ep_num = int(value)
         comic_images = get_bug_cat_comic(ep_num)
 
+    discord_files = []
+
     if len(comic_images) > 0:
         print(comic_images)
         await await_ctx(ctx, content="Episode found")
+        i = 1
         for image_url in comic_images:
-            e = discord.Embed()
-            e.set_image(url=image_url)
-            await ctx.send(embed=e)
+            s = requests.get(image_url, headers={'referer': "http://www.webtoons.com/"})
+            image = io.BytesIO(s.content)
+            file = discord.File(image, str(i))
+            discord_files.append(file)
+            i += 1
+
+        await ctx.send(files=discord_files)
 
 
 @client.command()
