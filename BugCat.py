@@ -101,10 +101,12 @@ def get_bug_cat_comic_url(ep_num: int):
     main_title_section = main_url.split("/")[6]
     alt_title_section = alt_url.split("/")[6]
 
-    if main_title_section.count(str(ep_num)) == 1:
+    if main_title_section.count(str(ep_num)) >= 1:
+        print(main_url)
         return main_url
 
-    elif alt_title_section.count(str(ep_num)) == 1:
+    elif alt_title_section.count(str(ep_num)) >= 1:
+        print(alt_url)
         return alt_url
 
     else:
@@ -181,7 +183,7 @@ async def reset_display_name():
     await client.wait_until_ready()
     while not client.is_closed():
         for changed_guild in client.guilds:
-            if changed_guild.me.display_name != "GuuBot":
+            if changed_guild.me.display_name != "BugCat Bot":
                 print(changed_guild.name)
                 print(changed_guild.me.display_name)
                 print("---")
@@ -303,6 +305,9 @@ async def on_message(message):
     # Bot does not respond in the venting channel
     if message.channel.id == venting_channel:
         return
+
+    if message.content.lower()[:6] == "bugcat":
+        message.content = "guubot" + message.content[6:]
 
     await client.process_commands(message)
 
