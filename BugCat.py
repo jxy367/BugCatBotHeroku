@@ -252,19 +252,20 @@ async def ep(ctx, value):
         ep_num = int(value)
         comic_images = get_bug_cat_comic(ep_num)
 
-    discord_files = []
+    #discord_files = []
 
     if len(comic_images) > 0:
         print(comic_images)
 
         i = 1
         await await_ctx(ctx, content="Episode found")
-        async with aiohttp.ClientSession(headers={'referer': "https://www.webtoons.com/"}) as session:
-            for image_url in comic_images:
+        for image_url in comic_images:
+            async with aiohttp.ClientSession(headers={'referer': "https://www.webtoons.com/"}) as session:
                 async with session.get(image_url) as resp:
+                    print(resp.status)
                     data = io.BytesIO(await resp.read())
                     await ctx.send(file=discord.File(data, str(i)))
-                    discord_files.append(discord.File(data, str(i)))
+                    #discord_files.append(discord.File(data, str(i)))
                     i += 1
 
 
