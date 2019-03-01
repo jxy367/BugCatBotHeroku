@@ -307,7 +307,7 @@ async def on_message(message):
         return
 
     if message.content.lower()[:6] == "bugcat":
-        message.content = "guubot" + message.content[6:]
+        message.content = "bugcat" + message.content[6:]
 
     await client.process_commands(message)
 
