@@ -7,7 +7,6 @@ import discord
 import requests
 from bs4 import BeautifulSoup
 from discord.ext import commands
-from pytz import timezone
 
 
 API_KEY = os.environ.get('API_KEY')
