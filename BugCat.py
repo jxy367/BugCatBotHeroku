@@ -15,7 +15,7 @@ TOKEN = os.environ.get('TOKEN')
 # GOOGLE_CHROME_BIN = os.environ.get('GOOGLE_CHROM_BIN')
 # CHROMEDRIVER_PATH = os.environ.get('CHROMEDRIVER_PATH')
 
-client = commands.Bot(command_prefix="BugCat ", case_insensitive=True)
+client = commands.Bot(command_prefix="bugcat ", case_insensitive=True)
 
 # Bug Cat Messages #
 
@@ -248,14 +248,13 @@ async def ep(ctx, value):
         ep_num = int(value)
         comic_images = get_bug_cat_comic(ep_num)
 
-    discord_files = []
     if len(comic_images) > 0:
-        i = 1
+        await await_ctx(ctx, content="Episode found")
         for image_url in comic_images:
-            discord_files.append(discord.File(image_url, str(i)))
-            i += 1
+            e = discord.Embed()
+            e.set_image(url=image_url)
+            await ctx.send(embed=e)
 
-    await await_ctx(ctx, files=discord_files)
 
 
 @client.command()
@@ -274,10 +273,10 @@ client.remove_command('help')
 async def help(ctx):
     embed = discord.Embed(title="BugCat", description="List of commands:", color=0xeee657)
 
-    embed.add_field(name="Bug cat ep [# or 'latest']", value="Searches and returns the relevant episode",
+    embed.add_field(name="BugCat ep [# or 'latest']", value="Searches and returns the relevant episode",
                     inline=False)
 
-    embed.add_field(name="Bug cat help", value="Gives this message", inline=False)
+    embed.add_field(name="BugCat help", value="Gives this message", inline=False)
 
     await ctx.send(embed=embed)
 
